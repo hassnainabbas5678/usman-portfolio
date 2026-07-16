@@ -2,11 +2,11 @@
 
 ## Run locally
 
-Run `npm install`, then `npm run dev`. In a second terminal, run `npm run server` to enable the contact endpoint (the Vite development server proxies `/api` requests to it). Create a `.env` file from `.env.example` first.
+Run `npm install`, then `npm run dev` to work on the site. To test the contact form locally, use `npx netlify dev`; it loads the Netlify Function and local variables from `.env`. Create a `.env` file from `.env.example` first.
 
 ## Production build
 
-Run `npm run build`. Deploy the static site plus `server.js` (or move its single `/api/contact` handler into your host's serverless-function convention).
+Run `npm run build`. Deploy the static Vite output to Netlify; the contact form is handled by the Netlify Function at `/.netlify/functions/contact`.
 
 ## Content and images
 
