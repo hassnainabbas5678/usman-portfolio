@@ -2,20 +2,32 @@ import { Resend } from 'resend'
 
 const json = (statusCode, body) => ({
   statusCode,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 'Content-Type': 'application/json; charset=utf-8' },
   body: JSON.stringify(body),
 })
 
+const classifyResendError = (error) => {
+  const detail = `${error?.name || ''} ${error?.message || ''}`.toLowerCase()
+
+  if (/(api key|unauthorized|authentication|forbidden)/.test(detail)) return 'RESEND_AUTHENTICATION_FAILED'
+  if (/(sender|from|domain|verified)/.test(detail)) return 'RESEND_SENDER_REJECTED'
+  if (/(recipient|to address|destination)/.test(detail)) return 'RESEND_RECIPIENT_REJECTED'
+  return 'RESEND_REQUEST_REJECTED'
+}
+
 export const handler = async (event) => {
+  console.info('contact_request_received', { method: event.httpMethod })
+
   if (event.httpMethod !== 'POST') {
-    return json(405, { error: 'Method not allowed' })
+    return json(405, { error: 'Method not allowed', code: 'METHOD_NOT_ALLOWED' })
   }
 
   let form
   try {
     form = JSON.parse(event.body || '{}')
   } catch {
-    return json(400, { error: 'Invalid form data' })
+    console.warn('contact_request_invalid_json')
+    return json(400, { error: 'Invalid form data', code: 'INVALID_JSON' })
   }
 
   const name = String(form.name || '').trim()
@@ -24,12 +36,22 @@ export const handler = async (event) => {
   const message = String(form.message || '').trim()
 
   if (!name || !email || !subject || !message || !/^\S+@\S+\.\S+$/.test(email)) {
-    return json(400, { error: 'Invalid form data' })
+    console.warn('contact_request_invalid_fields', {
+      hasName: Boolean(name), hasEmail: Boolean(email), hasSubject: Boolean(subject), hasMessage: Boolean(message),
+    })
+    return json(400, { error: 'Invalid form data', code: 'INVALID_FORM_DATA' })
   }
 
   const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env
-  if (!RESEND_API_KEY || !CONTACT_TO_EMAIL || !CONTACT_FROM_EMAIL) {
-    return json(503, { error: 'Email is not configured' })
+  const missingVariables = [
+    ['RESEND_API_KEY', RESEND_API_KEY],
+    ['CONTACT_TO_EMAIL', CONTACT_TO_EMAIL],
+    ['CONTACT_FROM_EMAIL', CONTACT_FROM_EMAIL],
+  ].filter(([, value]) => !value).map(([name]) => name)
+
+  if (missingVariables.length) {
+    console.error('contact_configuration_missing', { missingVariables })
+    return json(503, { error: 'Email is not configured', code: 'EMAIL_CONFIGURATION_MISSING' })
   }
 
   try {
@@ -43,13 +65,26 @@ export const handler = async (event) => {
     })
 
     if (error) {
-      console.error('Resend email error:', error.name)
-      return json(502, { error: 'Unable to send email' })
+      const code = classifyResendError(error)
+      console.error('contact_resend_rejected', {
+        code,
+        name: error.name,
+        message: error.message,
+        statusCode: error.statusCode,
+      })
+      return json(502, { error: 'Unable to send email', code })
     }
 
+    console.info('contact_email_sent')
     return json(200, { ok: true })
   } catch (error) {
-    console.error('Contact function error:', error.name)
-    return json(500, { error: 'Unable to send email' })
+    const code = classifyResendError(error)
+    console.error('contact_function_failure', {
+      code,
+      name: error?.name,
+      message: error?.message,
+      statusCode: error?.statusCode,
+    })
+    return json(500, { error: 'Unable to send email', code })
   }
 }
