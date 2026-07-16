@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { projects, services, posts, site } from './data/content'
-import portrait from './assets/images/profile/usman-portrait.jpg'
+import portrait from './assets/images/profile/usman-brand-portrait.webp'
+import logo from './assets/images/ub-trademark.png'
 import './styles.css'
 import './upgrade.css'
 import './intro-timing.css'
+import './brand-logo.css'
 
 const Arrow=()=> <span aria-hidden="true">↗</span>
 const nav=['Home','About','Portfolio','Services','Journal','Contact']
