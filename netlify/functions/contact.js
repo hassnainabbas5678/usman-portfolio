@@ -32,12 +32,13 @@ export const handler = async (event) => {
 
   const name = String(form.name || '').trim()
   const email = String(form.email || '').trim()
+  const phone = String(form.phone || '').trim()
   const subject = String(form.subject || '').trim()
   const message = String(form.message || '').trim()
 
-  if (!name || !email || !subject || !message || !/^\S+@\S+\.\S+$/.test(email)) {
+  if (!name || !email || !phone || !subject || !message || !/^\S+@\S+\.\S+$/.test(email)) {
     console.warn('contact_request_invalid_fields', {
-      hasName: Boolean(name), hasEmail: Boolean(email), hasSubject: Boolean(subject), hasMessage: Boolean(message),
+      hasName: Boolean(name), hasEmail: Boolean(email), hasPhone: Boolean(phone), hasSubject: Boolean(subject), hasMessage: Boolean(message),
     })
     return json(400, { error: 'Invalid form data', code: 'INVALID_FORM_DATA' })
   }
@@ -61,7 +62,7 @@ export const handler = async (event) => {
       to: CONTACT_TO_EMAIL,
       replyTo: email,
       subject: `Portfolio enquiry: ${subject}`,
-      text: `Name: ${name}\nEmail: ${email}\nProject: ${subject}\n\nMessage:\n${message}\n\nSubmitted: ${new Date().toISOString()}`,
+      text: `NEW PORTFOLIO ENQUIRY\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nProject Type / Subject: ${subject}\n\nMessage:\n${message}\n\nSubmitted: ${new Date().toISOString()}`,
     })
 
     if (error) {
@@ -76,7 +77,7 @@ export const handler = async (event) => {
     }
 
     console.info('contact_email_sent')
-    return json(200, { ok: true })
+    return json(200, { success: true, message: 'Message sent successfully.' })
   } catch (error) {
     const code = classifyResendError(error)
     console.error('contact_function_failure', {
