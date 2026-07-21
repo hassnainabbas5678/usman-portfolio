@@ -1,12 +1,88 @@
-import arc from '../assets/images/projects/arc-studio.jpg'
-export const site={name:'Usman Butt',email:'hello@usmanbutt.design',hero:'I create bold visual identities and engaging designs that help brands communicate, connect, and stand out.',about:'With a balance of strategic thinking and curious making, I partner with people and businesses to create work with a point of view.',tools:['Adobe Illustrator','Adobe Photoshop','Adobe InDesign','Figma','Premiere Pro']}
-export const projects=[
- {slug:'arc-studio',title:'Arc Studio',category:'Branding',year:'2026',client:'Arc Studio',image:arc,description:'A vivid identity system for a creative architecture studio with a human point of view.'},
- {slug:'tempo-coffee',title:'Tempo Coffee',category:'Packaging',year:'2025',client:'Tempo Coffee',image:arc,description:'A packaging system made to energise a daily ritual.'},
- {slug:'northline',title:'Northline',category:'Logo Design',year:'2025',client:'Northline',image:arc,description:'A versatile mark and brand world for a new way forward.'},
- {slug:'field-notes',title:'Field Notes',category:'Print',year:'2024',client:'Field Notes',image:arc,description:'A print-led identity shaped by clarity, curiosity and craft.'},
- {slug:'orbit-social',title:'Orbit Social',category:'Social Media',year:'2024',client:'Orbit',image:arc,description:'A distinct digital campaign built for scroll-stopping moments.'},
- {slug:'vessel',title:'Vessel',category:'Digital',year:'2024',client:'Vessel',image:arc,description:'A crisp launch identity for a new wellness platform.'}
-]
-export const services=[{title:'Brand Identity',description:'Strategy, positioning and a coherent visual system built around what makes you distinct.'},{title:'Logo Design',description:'Memorable, flexible marks designed to work hard at every scale.'},{title:'Social Media Design',description:'Content systems that build recognition across your digital channels.'},{title:'Packaging Design',description:'Tactile, shelf-ready packaging that makes a clear first impression.'},{title:'Marketing Creatives',description:'Campaign visuals for launches, promotions and everyday brand moments.'},{title:'Print Design',description:'Editorial, collateral and experiences made to live off-screen.'}]
-export const posts=[{slug:'designing-for-recognition',title:'Designing for recognition, not noise.',category:'INSIGHT',date:'MAY 12, 2026',readTime:'4 MIN READ',excerpt:'Why a consistent visual system is more powerful than a one-off attention grabber.'},{slug:'the-case-for-constraints',title:'The case for creative constraints.',category:'PROCESS',date:'APR 28, 2026',readTime:'3 MIN READ',excerpt:'A few useful boundaries can lead to work that is more focused and more original.'},{slug:'identity-in-motion',title:'Building an identity that moves.',category:'CASE STUDY',date:'APR 03, 2026',readTime:'5 MIN READ',excerpt:'The small choices that help a static identity come alive in digital spaces.'}]
+import arc from "../assets/images/projects/arc-studio.jpg";
+export const site = {
+  name: "Usman Butt",
+  email: "hello@usmanbutt.design",
+  hero: "I create bold visual identities and engaging designs that help brands communicate, connect, and stand out.",
+  about:
+    "With a balance of strategic thinking and curious making, I partner with people and businesses to create work with a point of view.",
+  tools: [
+    "Adobe Illustrator",
+    "Adobe Photoshop",
+    "Adobe InDesign",
+    "Figma",
+    "Premiere Pro",
+  ],
+};
+export const projects = [
+  {
+    slug: "arc-studio",
+    title: "Arc Studio",
+    category: "Branding",
+    year: "2026",
+    client: "Arc Studio",
+    image: "/images/projects/arc-studio.jpg",
+    description:
+      "A vivid identity system for a creative architecture studio with a human point of view.",
+  },
+];
+export const services = [
+  {
+    title: "Brand Identity",
+    description:
+      "Strategy, positioning and a coherent visual system built around what makes you distinct.",
+  },
+  {
+    title: "Logo Design",
+    description:
+      "Memorable, flexible marks designed to work hard at every scale.",
+  },
+  {
+    title: "Social Media Design",
+    description:
+      "Content systems that build recognition across your digital channels.",
+  },
+  {
+    title: "Packaging Design",
+    description:
+      "Tactile, shelf-ready packaging that makes a clear first impression.",
+  },
+  {
+    title: "Marketing Creatives",
+    description:
+      "Campaign visuals for launches, promotions and everyday brand moments.",
+  },
+  {
+    title: "Print Design",
+    description:
+      "Editorial, collateral and experiences made to live off-screen.",
+  },
+];
+export const posts = [
+  {
+    slug: "designing-for-recognition",
+    title: "Designing for recognition, not noise.",
+    category: "INSIGHT",
+    date: "MAY 12, 2026",
+    readTime: "4 MIN READ",
+    excerpt:
+      "Why a consistent visual system is more powerful than a one-off attention grabber.",
+  },
+  {
+    slug: "the-case-for-constraints",
+    title: "The case for creative constraints.",
+    category: "PROCESS",
+    date: "APR 28, 2026",
+    readTime: "3 MIN READ",
+    excerpt:
+      "A few useful boundaries can lead to work that is more focused and more original.",
+  },
+  {
+    slug: "identity-in-motion",
+    title: "Building an identity that moves.",
+    category: "CASE STUDY",
+    date: "APR 03, 2026",
+    readTime: "5 MIN READ",
+    excerpt:
+      "The small choices that help a static identity come alive in digital spaces.",
+  },
+];
