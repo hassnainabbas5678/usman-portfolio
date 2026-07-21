@@ -169,7 +169,7 @@ function Home() {
             Logo & Branding Expert · AI Content Strategist · 500+ Projects
             Delivered
           </p>
-          <p className="hero-name">USMAN BUTT</p>
+      
           <h1>
             DESIGN
             <br />
