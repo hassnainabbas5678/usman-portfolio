@@ -1,4 +1,3 @@
-import arc from "../assets/images/projects/arc-studio.jpg";
 export const site = {
   name: "Usman Butt",
   email: "hello@usmanbutt.design",
@@ -20,9 +19,20 @@ export const projects = [
     category: "Branding",
     year: "2026",
     client: "Arc Studio",
-    image: "/images/projects/arc-studio.jpg",
+    image: "/images/projects/p1.png",
     description:
       "A vivid identity system for a creative architecture studio with a human point of view.",
+  },
+
+  {
+    slug: "shuhdush",
+    title: "jidjis",
+    category: "Branding",
+    year: "2026",
+    client: "Arc Studio",
+    image: "/images/projects/p1.png",
+    description:
+      "2nd projects.",
   },
 ];
 export const services = [
