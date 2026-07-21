@@ -1,6 +1,6 @@
 export const site = {
   name: "Usman Butt",
-  email: "hello@usmanbutt.design",
+  email: "usmanirfanbutt22@gmail.com",
   hero: "I’m Usman Butt, a graphic designer helping brands increase sales with high-converting designs.",
   about:
     "I’m a graphic designer and AI content strategist focused on creating high-converting visuals that help brands stand out, connect with their audience, and drive more sales. From logo design and brand identity to social media creatives and digital graphics, I combine creativity with strategy to create designs that serve a purpose. With 500+ projects delivered, I also work with YouTube automation and Etsy listings, helping creators and online businesses build a stronger, more professional digital presence.",
@@ -19,9 +19,24 @@ export const projects = [
     category: "Branding",
     year: "2026",
     client: "Arc Studio",
+<<<<<<< HEAD
     image: "/images/projects/p1.jpg",
+=======
+    image: "/images/projects/p1.png",
+>>>>>>> 7433a7a201c79d227869607273c240541f7b460d
     description:
       "A vivid identity system for a creative architecture studio with a human point of view.",
+  },
+
+  {
+    slug: "shuhdush",
+    title: "jidjis",
+    category: "Branding",
+    year: "2026",
+    client: "Arc Studio",
+    image: "/images/projects/p1.png",
+    description:
+      "2nd projects.",
   },
 ];
 export const services = [
