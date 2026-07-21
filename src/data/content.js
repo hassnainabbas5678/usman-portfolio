@@ -19,11 +19,9 @@ export const projects = [
     category: "Branding",
     year: "2026",
     client: "Arc Studio",
-<<<<<<< HEAD
+
     image: "/images/projects/p1.jpg",
-=======
     image: "/images/projects/p1.png",
->>>>>>> 7433a7a201c79d227869607273c240541f7b460d
     description:
       "A vivid identity system for a creative architecture studio with a human point of view.",
   },
