@@ -2,9 +2,9 @@ import arc from "../assets/images/projects/arc-studio.jpg";
 export const site = {
   name: "Usman Butt",
   email: "hello@usmanbutt.design",
-  hero: "I create bold visual identities and engaging designs that help brands communicate, connect, and stand out.",
+  hero: "I’m Usman Butt, a graphic designer helping brands increase sales with high-converting designs.",
   about:
-    "With a balance of strategic thinking and curious making, I partner with people and businesses to create work with a point of view.",
+    "I’m a graphic designer and AI content strategist focused on creating high-converting visuals that help brands stand out, connect with their audience, and drive more sales. From logo design and brand identity to social media creatives and digital graphics, I combine creativity with strategy to create designs that serve a purpose. With 500+ projects delivered, I also work with YouTube automation and Etsy listings, helping creators and online businesses build a stronger, more professional digital presence.",
   tools: [
     "Adobe Illustrator",
     "Adobe Photoshop",
@@ -27,34 +27,34 @@ export const projects = [
 ];
 export const services = [
   {
-    title: "Brand Identity",
+    title: "Brand Identity & Logo Design",
     description:
-      "Strategy, positioning and a coherent visual system built around what makes you distinct.",
-  },
-  {
-    title: "Logo Design",
-    description:
-      "Memorable, flexible marks designed to work hard at every scale.",
+      "Building memorable brand identities with custom logos and visual elements that give your business a unique and professional look.",
   },
   {
     title: "Social Media Design",
     description:
-      "Content systems that build recognition across your digital channels.",
+      "Creating scroll-stopping social media posts, ads, banners, and digital creatives designed to keep your brand consistent and engaging.",
   },
   {
     title: "Packaging Design",
     description:
-      "Tactile, shelf-ready packaging that makes a clear first impression.",
+      "Designing creative and professional packaging that makes your product stand out while staying true to your brand identity.",
   },
   {
-    title: "Marketing Creatives",
+    title: "YouTube Automation",
     description:
-      "Campaign visuals for launches, promotions and everyday brand moments.",
+      "Helping build and manage faceless YouTube channels, from content planning and visual direction to thumbnails and the overall content workflow.",
   },
   {
-    title: "Print Design",
+    title: "Etsy Listing Design",
     description:
-      "Editorial, collateral and experiences made to live off-screen.",
+      "Creating professional Etsy listing images and digital product visuals that make your products look polished, clear, and ready to sell.",
+  },
+  {
+    title: "Digital & Web Graphics",
+    description:
+      "Creating banners, web graphics, promotional designs, thumbnails, and other digital assets tailored to your brand and audience.",
   },
 ];
 export const posts = [

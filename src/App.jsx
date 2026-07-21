@@ -1,31 +1,717 @@
-import { useEffect, useState } from 'react'
-import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { projects, services, posts, site } from './data/content'
-import portrait from './assets/images/profile/usman-brand-portrait.webp'
+import { useEffect, useState } from "react";
+import {
+  Link,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from "react-router-dom";
+import { projects, services, posts, site } from "./data/content";
+import portrait from "./assets/images/profile/usman-brand-portrait.webp";
 import resume from "./Usman-Butt-Resume.pdf";
-import './styles.css'
-import './upgrade.css'
-import './intro-timing.css'
-import './brand-logo.css'
-import './packages.css'
+import "./styles.css";
+import "./upgrade.css";
+import "./intro-timing.css";
+import "./brand-logo.css";
+import "./packages.css";
 
-const Arrow=()=> <span aria-hidden="true">↗</span>
-const nav=['Home','About','Portfolio','Services','Packages','Contact']
-function Seo({title}){useEffect(()=>{document.title=`${title} — ${site.name}`},[title])}
-function Intro(){const [show,setShow]=useState(()=>!sessionStorage.getItem('ub-intro'));useEffect(()=>{if(!show)return;const t=setTimeout(()=>{sessionStorage.setItem('ub-intro','1');setShow(false)},3150);return()=>clearTimeout(t)},[show]);return show?<div className="intro" aria-label="Usman Butt, Graphic Designer"><div className="intro-lockup"><small>INDEPENDENT DESIGN PRACTICE</small><div className="intro-name">USMAN BUTT</div><i></i><span>GRAPHIC DESIGNER · 2026</span></div></div>:null}
-function Cursor(){const [active,setActive]=useState(false);useEffect(()=>{if(matchMedia('(pointer:fine)').matches){setActive(true);const c=e=>document.documentElement.style.setProperty('--mx',`${e.clientX}px`)||document.documentElement.style.setProperty('--my',`${e.clientY}px`);window.addEventListener('pointermove',c);return()=>window.removeEventListener('pointermove',c)}},[]);return active?<div className="cursor" aria-hidden="true">VIEW</div>:null}
-function Header(){const [open,setOpen]=useState(false);return <><header><Link to="/" className="brand" onClick={()=>setOpen(false)}><strong>UB<span>.</span></strong><i>USMAN BUTT<br/>GRAPHIC DESIGNER</i></Link><nav>{nav.map(n=><NavLink key={n} to={n==='Home'?'/':`/${n.toLowerCase()}`}>{n}</NavLink>)}<a className="resume-link" href={resume} download>DOWNLOAD RESUME ↓</a></nav><button className="menu" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open}>{open?'×':'☰'}</button></header>{open&&<div className="mobile-nav">{nav.map(n=><NavLink key={n} onClick={()=>setOpen(false)} to={n==='Home'?'/':`/${n.toLowerCase()}`}>{n}</NavLink>)}<a className="resume-link" href="/Usman-Butt-Resume.pdf" download onClick={()=>setOpen(false)}>DOWNLOAD RESUME ↓</a></div>}</>}
-function Footer(){return <footer><div className="brand"><strong>UB<span>.</span></strong><i>USMAN BUTT<br/>GRAPHIC DESIGNER</i></div><p>© 2026 USMAN BUTT. ALL RIGHTS RESERVED.</p><a href="#top">BACK TO TOP ↑</a></footer>}
-function WorkCard({p,index=0}){return <Link className={`work-card work-${index}`} to={`/portfolio/${p.slug}`}><div className="work-art"><img src={p.image} alt={`${p.title} project mockup`} loading="lazy"/><span>VIEW</span></div><div className="work-meta"><div><small>{p.category} · {p.year}</small><h3>{p.title}</h3></div><b className="circle"><Arrow/></b></div></Link>}
-function Home(){return <><Seo title="Graphic Designer"/><section className="hero"><div className="hero-copy"><p className="eyebrow">Logo & Branding Expert · AI Content Strategist · 500+ Projects Delivered</p><p className="hero-name">USMAN BUTT</p><h1>DESIGN<br/>THAT MAKES<br/><em>A MARK.</em></h1><p className="hero-intro">{site.hero}</p><div className="actions"><Link className="btn dark" to="/portfolio">VIEW MY WORK <Arrow/></Link><Link className="text-link" to="/contact">LET’S TALK <Arrow/></Link></div></div><div className="hero-portrait"><img src={portrait} alt="Usman Butt placeholder portrait"/><div className="portrait-tag">USMAN<br/>BUTT</div><span className="portrait-index">01—26</span></div></section><section className="section work-section"><div className="section-head"><p className="eyebrow">01 / SELECTED WORK</p><h2>THOUGHTFUL DESIGN,<br/>BUILT TO <em>MOVE.</em></h2></div><div className="works">{projects.slice(0,4).map((p,i)=><WorkCard key={p.slug} p={p} index={i}/>)}</div><Link className="btn outline" to="/portfolio">VIEW ALL PROJECTS <Arrow/></Link></section><section className="about-preview"><div className="portrait-photo"><img src={portrait} alt="Usman Butt placeholder portrait"/><span>DESIGN<br/>WITH<br/>INTENT</span></div><div><p className="eyebrow">02 / ABOUT USMAN</p><h2>A SHARP EYE<br/>FOR THE <em>ESSENTIAL.</em></h2><p>{site.about}</p><Link className="text-link" to="/about">MORE ABOUT ME <Arrow/></Link></div></section><section className="section services-preview"><p className="eyebrow">03 / WHAT I DO</p><h2>CLARITY MEETS<br/>CHARACTER.</h2><div className="service-list">{services.slice(0,5).map((s,i)=><Link key={s.title} to="/services"><small>0{i+1}</small><b>{s.title}</b><Arrow/></Link>)}</div><Link className="text-link cyan-link" to="/services">EXPLORE SERVICES <Arrow/></Link></section><section className="section journal-preview"><div className="section-head"><p className="eyebrow">04 / FROM THE JOURNAL</p><Link className="text-link" to="/journal">VIEW JOURNAL <Arrow/></Link></div><div className="journal-grid">{posts.slice(0,2).map((p,i)=><Link to={`/journal/${p.slug}`} className="post" key={p.slug}><div className={`post-art a${i}`}></div><small>{p.category} · {p.date}</small><h2>{p.title}</h2><span className="text-link">READ ARTICLE <Arrow/></span></Link>)}</div></section><section className="cta"><p className="eyebrow">05 / HAVE A PROJECT IN MIND?</p><h2>LET’S CREATE<br/>SOMETHING <em>GREAT.</em></h2><Link className="btn cyan" to="/contact">LET’S WORK TOGETHER <Arrow/></Link></section></>}
-function Standard({title,kicker,children}){return <><Seo title={title}/><main className="page"><p className="eyebrow">{kicker}</p><h1>{title.toUpperCase()}<span>.</span></h1>{children}</main></>}
-function About(){return <Standard title="About Usman" kicker="THE PERSON BEHIND THE WORK"><div className="about-grid"><div className="portrait-photo large"><img src={portrait} alt="Usman Butt placeholder portrait"/><span>HELLO,<br/>I’M<br/>USMAN.</span></div><div><p className="lead">I’m Usman Butt, a graphic designer focused on visual identities and design experiences that help brands communicate with clarity and personality.</p><p>{site.about}</p><h3>EXPERIENCE & APPROACH</h3><p>Every project begins with listening. I find the core of an idea, then give it a visual language that is simple, expressive and built to last.</p><h3>TOOLS I USE</h3><div className="tags">{site.tools.map(x=><span key={x}>{x}</span>)}</div></div></div></Standard>}
-function Portfolio(){const [filter,setFilter]=useState('All');const cats=['All','Branding','Logo Design','Social Media','Packaging','Print','Digital'];const data=filter==='All'?projects:projects.filter(p=>p.category===filter);return <Standard title="Portfolio" kicker="SELECTED WORK"><p className="lead portfolio-intro">A selection of identities, campaigns and considered visual systems.</p><div className="filters">{cats.map(c=><button className={filter===c?'active':''} onClick={()=>setFilter(c)} key={c}>{c}</button>)}</div><div className="works portfolio-grid">{data.map((p,i)=><WorkCard key={p.slug} p={p} index={i}/>)}</div></Standard>}
-function Project(){const {slug}=useParams();const p=projects.find(x=>x.slug===slug);if(!p)return <NotFound/>;return <><Seo title={p.title}/><main className="project-page"><p className="eyebrow">{p.category} · {p.year}</p><h1>{p.title.toUpperCase()}<span>.</span></h1><div className="project-info"><p>{p.description}</p><dl><dt>CLIENT</dt><dd>{p.client}</dd><dt>ROLE</dt><dd>Art Direction & Design</dd><dt>SERVICES</dt><dd>{p.category}, Visual System</dd></dl></div><img className="project-hero" src={p.image} alt={`${p.title} project showcase`}/><div className="case-copy"><p className="eyebrow">THE CHALLENGE</p><h2>AN IDENTITY THAT<br/>WORKS <em>HARDER.</em></h2><p>We built a distinct, flexible visual system that performs across every moment of the brand experience—from its first impression to its everyday touchpoints.</p></div><div className="project-gallery"><img src={p.image} alt="Project detail"/><img src={p.image} alt="Project detail"/></div><Link className="btn dark" to="/portfolio">BACK TO PROJECTS <Arrow/></Link></main></>}
-function Services(){return <Standard title="Services" kicker="HOW I CAN HELP"><p className="lead service-lead">Strategic visual design for brands that have something meaningful to say.</p><div className="service-list full">{services.map((s,i)=><details key={s.title}><summary><small>0{i+1}</small><b>{s.title}</b><Arrow/></summary><p>{s.description}</p></details>)}</div><div className="mini-cta">NEED SOMETHING SPECIFIC? <Link to="/contact">LET’S TALK <Arrow/></Link></div></Standard>}
-function Packages(){const packages=[{number:'01',title:'Brand Launch',tag:'FOR NEW & GROWING BRANDS',price:'15,000',items:['Discovery & creative direction','Custom logo suite','Colour, typography & visual system','Social profile launch assets']},{number:'02',title:'Growth Partner',tag:'MOST POPULAR',price:'30,000',featured:true,items:['Everything in Brand Launch','Monthly social-media creative direction','Custom post & carousel templates','Campaign, ad & banner assets','Priority design support']},{number:'03',title:'Digital Presence',tag:'FOR CREATORS & ONLINE BUSINESSES',price:'50,000',items:['YouTube thumbnails & channel visuals','Etsy listing image system','Web banners & promotional graphics','On-brand digital asset library']}];return <Standard title="Packages" kicker="DESIGN SUPPORT, BUILT AROUND YOUR GOALS"><p className="lead packages-intro">Focused design packages that give your brand the clarity, consistency and momentum to move forward.</p><div className="package-grid">{packages.map(p=><article className={`package-card${p.featured?' featured':''}`} key={p.title}>{p.featured&&<span className="package-badge">MOST POPULAR</span>}<small>{p.number} / {p.tag}</small><h2>{p.title}</h2><div className="package-price"><span>PKR</span><b>{p.price}</b><small>STARTING FROM</small></div><ul>{p.items.map(item=><li key={item}>{item}</li>)}</ul><Link className="text-link" to="/contact">CHOOSE THIS PACKAGE <Arrow/></Link></article>)}</div><div className="packages-custom"><p className="eyebrow">NEED SOMETHING MORE SPECIFIC?</p><h2>LET’S BUILD A <em>CUSTOM PLAN.</em></h2><p>Every business has different goals. Tell me what you need and I’ll shape a focused scope around it.</p><Link className="btn dark" to="/contact">LET’S WORK TOGETHER <Arrow/></Link></div></Standard>}
-function Journal(){return <Standard title="Journal" kicker="THOUGHTS, PROCESS & DESIGN"><div className="journal-grid">{posts.map((p,i)=><Link to={`/journal/${p.slug}`} className="post" key={p.slug}><div className={`post-art a${i}`}></div><small>{p.category} · {p.date} · {p.readTime}</small><h2>{p.title}</h2><p>{p.excerpt}</p><span className="text-link">READ ARTICLE <Arrow/></span></Link>)}</div></Standard>}
-function Article(){const {slug}=useParams();const p=posts.find(x=>x.slug===slug);if(!p)return <NotFound/>;return <main className="article"><Seo title={p.title}/><p className="eyebrow">{p.category} · {p.date}</p><h1>{p.title}</h1><p className="lead">{p.excerpt}</p><div className="article-image"></div><p>Good design is rarely about adding more. It is the quiet discipline of deciding what deserves attention, then giving it room to breathe. In every project, the system matters as much as the final composition.</p><h2>DESIGN WITH PURPOSE</h2><p>When strategy and visual craft speak the same language, a brand becomes easy to recognise and even easier to remember.</p></main>}
-function Contact(){const [state,setState]=useState('');const submit=async e=>{e.preventDefault();if(state==='sending')return;const formElement=e.currentTarget;setState('sending');const form=Object.fromEntries(new FormData(formElement));try{const r=await fetch('/.netlify/functions/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(form)});const body=await r.json().catch(()=>null);console.log('Contact form response',{status:r.status,ok:r.ok,body});if(!r.ok||body?.success!==true){console.error('Contact form request failed',{endpoint:'/.netlify/functions/contact',status:r.status,code:body?.code||'FUNCTION_ROUTE_UNAVAILABLE'});throw Error()}formElement.reset();setState('success')}catch{setState('error')}};return <Standard title="Let’s Create Something Great" kicker="GET IN TOUCH"><div className="contact-grid"><div><p className="lead">Have a project in mind or want to discuss an idea? Send me a message and I’ll get back to you.</p><a className="contact-email" href={`mailto:${site.email}`}>{site.email}</a><p>AVAILABLE FOR SELECTED FREELANCE PROJECTS</p></div><form onSubmit={submit}><label>NAME<input required name="name"/></label><label>EMAIL<input required type="email" name="email"/></label><label>PHONE NUMBER<input required type="tel" name="phone" autoComplete="tel"/></label><label>PROJECT TYPE / SUBJECT<input required name="subject"/></label><label>MESSAGE<textarea required name="message" rows="5"/></label><button className="btn dark" disabled={state==='sending'}>{state==='sending'?'SENDING...':'SEND MESSAGE'} <Arrow/></button>{state==='success'&&<p className="form-success">MESSAGE SENT SUCCESSFULLY. I’LL GET BACK TO YOU SOON.</p>}{state==='error'&&<p className="form-error">SOMETHING WENT WRONG. PLEASE TRY AGAIN.</p>}</form></div></Standard>}
-function NotFound(){return <main className="notfound"><Seo title="Page not found"/><h1>404</h1><p>LOOKS LIKE THIS PAGE GOT LOST IN THE DESIGN PROCESS.</p><Link className="btn dark" to="/">BACK HOME <Arrow/></Link></main>}
-export default function App(){const l=useLocation();useEffect(()=>{window.scrollTo(0,0)},[l.pathname]);return <div id="top"><Intro/><Cursor/><Header/><main className="route-shell" key={l.pathname}><Routes><Route path="/" element={<Home/>}/><Route path="/about" element={<About/>}/><Route path="/portfolio" element={<Portfolio/>}/><Route path="/portfolio/:slug" element={<Project/>}/><Route path="/services" element={<Services/>}/><Route path="/packages" element={<Packages/>}/><Route path="/contact" element={<Contact/>}/><Route path="*" element={<NotFound/>}/></Routes></main><Footer/></div>}
+const Arrow = () => <span aria-hidden="true">↗</span>;
+const nav = ["Home", "About", "Portfolio", "Services", "Packages", "Contact"];
+function Seo({ title }) {
+  useEffect(() => {
+    document.title = `${title} — ${site.name}`;
+  }, [title]);
+}
+function Intro() {
+  const [show, setShow] = useState(() => !sessionStorage.getItem("ub-intro"));
+  useEffect(() => {
+    if (!show) return;
+    const t = setTimeout(() => {
+      sessionStorage.setItem("ub-intro", "1");
+      setShow(false);
+    }, 3150);
+    return () => clearTimeout(t);
+  }, [show]);
+  return show ? (
+    <div className="intro" aria-label="Usman Butt, Graphic Designer">
+      <div className="intro-lockup">
+        <small>INDEPENDENT DESIGN PRACTICE</small>
+        <div className="intro-name">USMAN BUTT</div>
+        <i></i>
+        <span>GRAPHIC DESIGNER · 2026</span>
+      </div>
+    </div>
+  ) : null;
+}
+function Cursor() {
+  const [active, setActive] = useState(false);
+  useEffect(() => {
+    if (matchMedia("(pointer:fine)").matches) {
+      setActive(true);
+      const c = (e) =>
+        document.documentElement.style.setProperty("--mx", `${e.clientX}px`) ||
+        document.documentElement.style.setProperty("--my", `${e.clientY}px`);
+      window.addEventListener("pointermove", c);
+      return () => window.removeEventListener("pointermove", c);
+    }
+  }, []);
+  return active ? (
+    <div className="cursor" aria-hidden="true">
+      VIEW
+    </div>
+  ) : null;
+}
+function Header() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <header>
+        <Link to="/" className="brand" onClick={() => setOpen(false)}>
+          <strong>
+            UB<span>.</span>
+          </strong>
+          <i>
+            USMAN BUTT
+            <br />
+            GRAPHIC DESIGNER
+          </i>
+        </Link>
+        <nav>
+          {nav.map((n) => (
+            <NavLink key={n} to={n === "Home" ? "/" : `/${n.toLowerCase()}`}>
+              {n}
+            </NavLink>
+          ))}
+          <a className="resume-link" href={resume} download>
+            DOWNLOAD RESUME ↓
+          </a>
+        </nav>
+        <button
+          className="menu"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle navigation"
+          aria-expanded={open}
+        >
+          {open ? "×" : "☰"}
+        </button>
+      </header>
+      {open && (
+        <div className="mobile-nav">
+          {nav.map((n) => (
+            <NavLink
+              key={n}
+              onClick={() => setOpen(false)}
+              to={n === "Home" ? "/" : `/${n.toLowerCase()}`}
+            >
+              {n}
+            </NavLink>
+          ))}
+          <a
+            className="resume-link"
+            href="/Usman-Butt-Resume.pdf"
+            download
+            onClick={() => setOpen(false)}
+          >
+            DOWNLOAD RESUME ↓
+          </a>
+        </div>
+      )}
+    </>
+  );
+}
+function Footer() {
+  return (
+    <footer>
+      <div className="brand">
+        <strong>
+          UB<span>.</span>
+        </strong>
+        <i>
+          USMAN BUTT
+          <br />
+          GRAPHIC DESIGNER
+        </i>
+      </div>
+      <p>© 2026 USMAN BUTT. ALL RIGHTS RESERVED.</p>
+      <a href="#top">BACK TO TOP ↑</a>
+    </footer>
+  );
+}
+function WorkCard({ p, index = 0 }) {
+  return (
+    <Link className={`work-card work-${index}`} to={`/portfolio/${p.slug}`}>
+      <div className="work-art">
+        <img src={p.image} alt={`${p.title} project mockup`} loading="lazy" />
+        <span>VIEW</span>
+      </div>
+      <div className="work-meta">
+        <div>
+          <small>
+            {p.category} · {p.year}
+          </small>
+          <h3>{p.title}</h3>
+        </div>
+        <b className="circle">
+          <Arrow />
+        </b>
+      </div>
+    </Link>
+  );
+}
+function Home() {
+  return (
+    <>
+      <Seo title="Graphic Designer" />
+      <section className="hero">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            Logo & Branding Expert · AI Content Strategist · 500+ Projects
+            Delivered
+          </p>
+          <p className="hero-name">USMAN BUTT</p>
+          <h1>
+            DESIGN
+            <br />
+            THAT MAKES
+            <br />
+            <em>A MARK.</em>
+          </h1>
+          <p className="hero-intro">{site.hero}</p>
+          <div className="actions">
+            <Link className="btn dark" to="/portfolio">
+              EXPLORE MY WORK <Arrow />
+            </Link>
+            <Link className="text-link" to="/contact">
+              LET’S TALK <Arrow />
+            </Link>
+          </div>
+        </div>
+        <div className="hero-portrait">
+          <img src={portrait} alt="Usman Butt placeholder portrait" />
+          <div className="portrait-tag">
+            USMAN
+            <br />
+            BUTT
+          </div>
+          <span className="portrait-index">01—26</span>
+        </div>
+      </section>
+      <section className="section work-section">
+        <div className="section-head">
+          <p className="eyebrow">01 / SELECTED WORK</p>
+          <h2>
+            THOUGHTFUL DESIGN,
+            <br />
+            BUILT TO <em>MOVE.</em>
+          </h2>
+        </div>
+        <div className="works">
+          {projects.slice(0, 4).map((p, i) => (
+            <WorkCard key={p.slug} p={p} index={i} />
+          ))}
+        </div>
+        <Link className="btn outline" to="/portfolio">
+          VIEW ALL PROJECTS <Arrow />
+        </Link>
+      </section>
+      <section className="about-preview">
+        <div className="portrait-photo">
+          <img src={portrait} alt="Usman Butt placeholder portrait" />
+          <span>
+            DESIGN
+            <br />
+            WITH
+            <br />
+            INTENT
+          </span>
+        </div>
+        <div>
+          <p className="eyebrow">02 / ABOUT USMAN</p>
+          <h2>
+            A SHARP EYE
+            <br />
+            FOR THE <em>ESSENTIAL.</em>
+          </h2>
+          <p>{site.about}</p>
+          <Link className="text-link" to="/about">
+            MORE ABOUT ME <Arrow />
+          </Link>
+        </div>
+      </section>
+      <section className="section services-preview">
+        <p className="eyebrow">03 / WHAT I DO</p>
+        <h2>
+          CLARITY MEETS
+          <br />
+          CHARACTER.
+        </h2>
+        <div className="service-list">
+          {services.slice(0, 5).map((s, i) => (
+            <Link key={s.title} to="/services">
+              <small>0{i + 1}</small>
+              <b>{s.title}</b>
+              <Arrow />
+            </Link>
+          ))}
+        </div>
+        <Link className="text-link cyan-link" to="/services">
+          EXPLORE SERVICES <Arrow />
+        </Link>
+      </section>
+      <section className="section journal-preview">
+        <div className="section-head">
+          <p className="eyebrow">04 / FROM THE JOURNAL</p>
+          <Link className="text-link" to="/journal">
+            VIEW JOURNAL <Arrow />
+          </Link>
+        </div>
+        <div className="journal-grid">
+          {posts.slice(0, 2).map((p, i) => (
+            <Link to={`/journal/${p.slug}`} className="post" key={p.slug}>
+              <div className={`post-art a${i}`}></div>
+              <small>
+                {p.category} · {p.date}
+              </small>
+              <h2>{p.title}</h2>
+              <span className="text-link">
+                READ ARTICLE <Arrow />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="cta">
+        <p className="eyebrow">05 / HAVE A PROJECT IN MIND?</p>
+        <h2>
+          LET’S CREATE
+          <br />
+          SOMETHING <em>GREAT.</em>
+        </h2>
+        <Link className="btn cyan" to="/contact">
+          LET’S WORK TOGETHER <Arrow />
+        </Link>
+      </section>
+    </>
+  );
+}
+function Standard({ title, kicker, children }) {
+  return (
+    <>
+      <Seo title={title} />
+      <main className="page">
+        <p className="eyebrow">{kicker}</p>
+        <h1>
+          {title.toUpperCase()}
+          <span>.</span>
+        </h1>
+        {children}
+      </main>
+    </>
+  );
+}
+function About() {
+  return (
+    <Standard title="About Usman" kicker="THE PERSON BEHIND THE WORK">
+      <div className="about-grid">
+        <div className="portrait-photo large">
+          <img src={portrait} alt="Usman Butt placeholder portrait" />
+          <span>
+            HELLO,
+            <br />
+            I’M
+            <br />
+            USMAN.
+          </span>
+        </div>
+        <div>
+          <p className="lead">Designing Ideas That Drive Results</p>
+          <p>{site.about}</p>
+        </div>
+      </div>
+    </Standard>
+  );
+}
+function Portfolio() {
+  const [filter, setFilter] = useState("All");
+  const cats = [
+    "All",
+    "Branding",
+    "Logo Design",
+    "Social Media",
+    "Packaging",
+    "Digital & Web Graphics",
+    "YT Thumbnails",
+    "YT Automation",
+    "Etsy Listings",
+  ];
+  const data =
+    filter === "All" ? projects : projects.filter((p) => p.category === filter);
+  return (
+    <Standard title="Portfolio" kicker="SELECTED WORK">
+      <p className="lead portfolio-intro">
+        Ideas Turned Into Visuals
+      </p>
+      <div className="filters">
+        {cats.map((c) => (
+          <button
+            className={filter === c ? "active" : ""}
+            onClick={() => setFilter(c)}
+            key={c}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+      <div className="works portfolio-grid">
+        {data.map((p, i) => (
+          <WorkCard key={p.slug} p={p} index={i} />
+        ))}
+      </div>
+    </Standard>
+  );
+}
+function Project() {
+  const { slug } = useParams();
+  const p = projects.find((x) => x.slug === slug);
+  if (!p) return <NotFound />;
+  return (
+    <>
+      <Seo title={p.title} />
+      <main className="project-page">
+        <p className="eyebrow">
+          {p.category} · {p.year}
+        </p>
+        <h1>
+          {p.title.toUpperCase()}
+          <span>.</span>
+        </h1>
+        <div className="project-info">
+          <p>{p.description}</p>
+          <dl>
+            <dt>CLIENT</dt>
+            <dd>{p.client}</dd>
+            <dt>ROLE</dt>
+            <dd>Art Direction & Design</dd>
+            <dt>SERVICES</dt>
+            <dd>{p.category}, Visual System</dd>
+          </dl>
+        </div>
+        <img
+          className="project-hero"
+          src={p.image}
+          alt={`${p.title} project showcase`}
+        />
+        <div className="case-copy">
+          <p className="eyebrow">THE CHALLENGE</p>
+          <h2>
+            AN IDENTITY THAT
+            <br />
+            WORKS <em>HARDER.</em>
+          </h2>
+          <p>
+            We built a distinct, flexible visual system that performs across
+            every moment of the brand experience—from its first impression to
+            its everyday touchpoints.
+          </p>
+        </div>
+        <div className="project-gallery">
+          <img src={p.image} alt="Project detail" />
+          <img src={p.image} alt="Project detail" />
+        </div>
+        <Link className="btn dark" to="/portfolio">
+          BACK TO PROJECTS <Arrow />
+        </Link>
+      </main>
+    </>
+  );
+}
+function Services() {
+  return (
+    <Standard title="Services" kicker="HOW I CAN HELP">
+      <p className="lead service-lead">
+        Strategic visual design for brands that have something meaningful to
+        say.
+      </p>
+      <div className="service-list full">
+        {services.map((s, i) => (
+          <details key={s.title}>
+            <summary>
+              <small>0{i + 1}</small>
+              <b>{s.title}</b>
+              <Arrow />
+            </summary>
+            <p>{s.description}</p>
+          </details>
+        ))}
+      </div>
+      <div className="mini-cta">
+        NEED SOMETHING SPECIFIC?{" "}
+        <Link to="/contact">
+          LET’S TALK <Arrow />
+        </Link>
+      </div>
+    </Standard>
+  );
+}
+function Packages() {
+  const packages = [
+    {
+      number: "01",
+      title: "Brand Launch",
+      tag: "FOR NEW & GROWING BRANDS",
+      price: "15,000",
+      items: [
+        "Discovery & creative direction",
+        "Custom logo suite",
+        "Colour, typography & visual system",
+        "Social profile launch assets",
+      ],
+    },
+    {
+      number: "02",
+      title: "Growth Partner",
+      tag: "MOST POPULAR",
+      price: "30,000",
+      featured: true,
+      items: [
+        "Everything in Brand Launch",
+        "Monthly social-media creative direction",
+        "Custom post & carousel templates",
+        "Campaign, ad & banner assets",
+        "Priority design support",
+      ],
+    },
+    {
+      number: "03",
+      title: "Digital Presence",
+      tag: "FOR CREATORS & ONLINE BUSINESSES",
+      price: "50,000",
+      items: [
+        "YouTube thumbnails & channel visuals",
+        "Etsy listing image system",
+        "Web banners & promotional graphics",
+        "On-brand digital asset library",
+      ],
+    },
+  ];
+  return (
+    <Standard title="Packages" kicker="DESIGN SUPPORT, BUILT AROUND YOUR GOALS">
+      <p className="lead packages-intro">
+        Focused design packages that give your brand the clarity, consistency
+        and momentum to move forward.
+      </p>
+      <div className="package-grid">
+        {packages.map((p) => (
+          <article
+            className={`package-card${p.featured ? " featured" : ""}`}
+            key={p.title}
+          >
+            {p.featured && <span className="package-badge">MOST POPULAR</span>}
+            <small>
+              {p.number} / {p.tag}
+            </small>
+            <h2>{p.title}</h2>
+            <div className="package-price">
+              <span>PKR</span>
+              <b>{p.price}</b>
+              <small>STARTING FROM</small>
+            </div>
+            <ul>
+              {p.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <Link className="text-link" to="/contact">
+              CHOOSE THIS PACKAGE <Arrow />
+            </Link>
+          </article>
+        ))}
+      </div>
+      <div className="packages-custom">
+        <p className="eyebrow">NEED SOMETHING MORE SPECIFIC?</p>
+        <h2>
+          LET’S BUILD A <em>CUSTOM PLAN.</em>
+        </h2>
+        <p>
+          Every business has different goals. Tell me what you need and I’ll
+          shape a focused scope around it.
+        </p>
+        <Link className="btn dark" to="/contact">
+          LET’S WORK TOGETHER <Arrow />
+        </Link>
+      </div>
+    </Standard>
+  );
+}
+function Journal() {
+  return (
+    <Standard title="Journal" kicker="THOUGHTS, PROCESS & DESIGN">
+      <div className="journal-grid">
+        {posts.map((p, i) => (
+          <Link to={`/journal/${p.slug}`} className="post" key={p.slug}>
+            <div className={`post-art a${i}`}></div>
+            <small>
+              {p.category} · {p.date} · {p.readTime}
+            </small>
+            <h2>{p.title}</h2>
+            <p>{p.excerpt}</p>
+            <span className="text-link">
+              READ ARTICLE <Arrow />
+            </span>
+          </Link>
+        ))}
+      </div>
+    </Standard>
+  );
+}
+function Article() {
+  const { slug } = useParams();
+  const p = posts.find((x) => x.slug === slug);
+  if (!p) return <NotFound />;
+  return (
+    <main className="article">
+      <Seo title={p.title} />
+      <p className="eyebrow">
+        {p.category} · {p.date}
+      </p>
+      <h1>{p.title}</h1>
+      <p className="lead">{p.excerpt}</p>
+      <div className="article-image"></div>
+      <p>
+        Good design is rarely about adding more. It is the quiet discipline of
+        deciding what deserves attention, then giving it room to breathe. In
+        every project, the system matters as much as the final composition.
+      </p>
+      <h2>DESIGN WITH PURPOSE</h2>
+      <p>
+        When strategy and visual craft speak the same language, a brand becomes
+        easy to recognise and even easier to remember.
+      </p>
+    </main>
+  );
+}
+function Contact() {
+  const [state, setState] = useState("");
+  const submit = async (e) => {
+    e.preventDefault();
+    if (state === "sending") return;
+    const formElement = e.currentTarget;
+    setState("sending");
+    const form = Object.fromEntries(new FormData(formElement));
+    try {
+      const r = await fetch("/.netlify/functions/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const body = await r.json().catch(() => null);
+      console.log("Contact form response", {
+        status: r.status,
+        ok: r.ok,
+        body,
+      });
+      if (!r.ok || body?.success !== true) {
+        console.error("Contact form request failed", {
+          endpoint: "/.netlify/functions/contact",
+          status: r.status,
+          code: body?.code || "FUNCTION_ROUTE_UNAVAILABLE",
+        });
+        throw Error();
+      }
+      formElement.reset();
+      setState("success");
+    } catch {
+      setState("error");
+    }
+  };
+  return (
+    <Standard title="Let’s Create Something Great" kicker="GET IN TOUCH">
+      <div className="contact-grid">
+        <div>
+          <p className="lead">
+            Have a project in mind or want to discuss an idea? Send me a message
+            and I’ll get back to you.
+          </p>
+          <a className="contact-email" href={`mailto:${site.email}`}>
+            {site.email}
+          </a>
+          <p>AVAILABLE FOR SELECTED FREELANCE PROJECTS</p>
+        </div>
+        <form onSubmit={submit}>
+          <label>
+            NAME
+            <input required name="name" />
+          </label>
+          <label>
+            EMAIL
+            <input required type="email" name="email" />
+          </label>
+          <label>
+            PHONE NUMBER
+            <input required type="tel" name="phone" autoComplete="tel" />
+          </label>
+          <label>
+            PROJECT TYPE / SUBJECT
+            <input required name="subject" />
+          </label>
+          <label>
+            MESSAGE
+            <textarea required name="message" rows="5" />
+          </label>
+          <button className="btn dark" disabled={state === "sending"}>
+            {state === "sending" ? "SENDING..." : "SEND MESSAGE"} <Arrow />
+          </button>
+          {state === "success" && (
+            <p className="form-success">
+              MESSAGE SENT SUCCESSFULLY. I’LL GET BACK TO YOU SOON.
+            </p>
+          )}
+          {state === "error" && (
+            <p className="form-error">
+              SOMETHING WENT WRONG. PLEASE TRY AGAIN.
+            </p>
+          )}
+        </form>
+      </div>
+    </Standard>
+  );
+}
+function NotFound() {
+  return (
+    <main className="notfound">
+      <Seo title="Page not found" />
+      <h1>404</h1>
+      <p>LOOKS LIKE THIS PAGE GOT LOST IN THE DESIGN PROCESS.</p>
+      <Link className="btn dark" to="/">
+        BACK HOME <Arrow />
+      </Link>
+    </main>
+  );
+}
+export default function App() {
+  const l = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [l.pathname]);
+  return (
+    <div id="top">
+      <Intro />
+      <Cursor />
+      <Header />
+      <main className="route-shell" key={l.pathname}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/portfolio/:slug" element={<Project />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+}
