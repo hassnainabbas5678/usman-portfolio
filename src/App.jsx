@@ -140,11 +140,11 @@ function Footer() {
 }
 function WorkCard({ p, index = 0 }) {
   return (
-    <Link className={`work-card work-${index}`} to={`/portfolio/${p.slug}`}>
+    <div className={`work-card work-${index}`}>
       <div className="work-art">
         <img src={p.image} alt={`${p.title} project mockup`} loading="lazy" />
-        <span>VIEW</span>
       </div>
+
       <div className="work-meta">
         <div>
           <small>
@@ -152,11 +152,8 @@ function WorkCard({ p, index = 0 }) {
           </small>
           <h3>{p.title}</h3>
         </div>
-        <b className="circle">
-          <Arrow />
-        </b>
       </div>
-    </Link>
+    </div>
   );
 }
 function Home() {
